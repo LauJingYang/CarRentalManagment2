@@ -1,19 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using CarRentalManagment2.Configurations.Entities;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using CarRentalManagment2.Data;
+using CarRentalManagment2.Configurations.Entities;
 
 namespace CarRentalManagment2.Data
 {
-    public class CarRentalManagment2Context : DbContext
+    public class CarRentalManagment2Context(DbContextOptions<CarRentalManagment2Context> options) : IdentityDbContext<CarRentalManagment2User>(options)
     {
-        public CarRentalManagment2Context (DbContextOptions<CarRentalManagment2Context> options)
-            : base(options)
-        {
-        }
-
         public DbSet<CarRentalManagement2.Domain.Make> Make { get; set; } = default!;
         public DbSet<CarRentalManagement2.Domain.Model> Model { get; set; } = default!;
         public DbSet<CarRentalManagement2.Domain.Colour> Colour { get; set; } = default!;
