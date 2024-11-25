@@ -2,8 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using CarRentalManagment2.Data;
 using CarRentalManagment2.Configurations.Entities;
-//using CarRentalManagement.Configurations.Entities;
-//using CarRentalManagement2.Configurations.Entities;
+
 
 namespace CarRentalManagment2.Data
 {
