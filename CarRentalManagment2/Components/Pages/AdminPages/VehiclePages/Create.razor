@@ -26,18 +26,45 @@
                 <ValidationMessage For="() => Vehicle.LicensePlateNumber" class="text-danger" /> 
             </div>        
             <div class="mb-3">
-                <label for="makeid" class="form-label">MakeId:</label> 
-                <InputNumber id="makeid" @bind-Value="Vehicle.MakeId" class="form-control" /> 
+                <label for="makeid" class="form-label">Make:</label>
+                <InputSelect id="makeid" @bind-Value="Vehicle.MakeId" class="form-control">
+                    <option value="">-- Select Make --</option>
+                    @if (Makes   != null)
+                    {
+                        foreach (var make in Makes)
+                        {
+                            <option value="@make.Id">@make.Name</option>
+                        }
+                    }
+                </InputSelect>
                 <ValidationMessage For="() => Vehicle.MakeId" class="text-danger" /> 
             </div>        
             <div class="mb-3">
-                <label for="modelid" class="form-label">ModelId:</label> 
-                <InputNumber id="modelid" @bind-Value="Vehicle.ModelId" class="form-control" /> 
+                <label for="modelid" class="form-label">Model:</label>
+                <InputSelect id="modelid" @bind-Value="Vehicle.ModelId" class="form-control">
+                    <option value="">-- Select Model --</option>
+                    @if (Models != null)
+                    {
+                        foreach (var model in Models)
+                        {
+                            <option value="@model.Id">@model.Name</option>
+                        }
+                    }
+                </InputSelect>
                 <ValidationMessage For="() => Vehicle.ModelId" class="text-danger" /> 
             </div>        
             <div class="mb-3">
-                <label for="colourid" class="form-label">ColourId:</label> 
-                <InputNumber id="colourid" @bind-Value="Vehicle.ColourId" class="form-control" /> 
+                <label for="colourid" class="form-label">Colour:</label> 
+                <InputSelect id="colourid" @bind-Value="Vehicle.ColourId" class="form-control"> 
+                    <option value="">-- Select Colour --</option>
+                    @if (Colours != null)
+                    {
+                        foreach (var colour in Colours)
+                        {
+                            <option value="@colour.Id">@colour.Name</option>
+                        }
+                    }
+                </InputSelect>
                 <ValidationMessage For="() => Vehicle.ColourId" class="text-danger" /> 
             </div>        
             <div class="mb-3">
@@ -72,6 +99,20 @@
 @code {
     [SupplyParameterFromForm]
     private Vehicle Vehicle { get; set; } = new();
+
+    //Declare and initialize CarRentalManagementContext and IList
+    private CarRentalManagment2Context context = default!;
+    private IList<Make> Makes;
+    private IList<Model> Models;
+    private IList<Colour> Colours;
+    //OnInitialized method to get all Makes, Models and Colours
+    protected override void OnInitialized()
+    {
+        context = DbFactory.CreateDbContext();
+        Makes = context.Make.ToList();
+        Models = context.Model.ToList();
+        Colours = context.Colour.ToList();
+    }
 
     // To protect from overposting attacks, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
     private async Task AddVehicle()
