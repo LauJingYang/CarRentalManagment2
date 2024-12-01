@@ -5,6 +5,9 @@
 @using CarRentalManagment2.Data
 @implements IAsyncDisposable
 @inject IDbContextFactory<CarRentalManagment2.Data.CarRentalManagment2Context> DbFactory
+@rendermode InteractiveServer
+
+@attribute [Authorize(Roles = "Administrator, User")]
 
 <PageTitle>Index</PageTitle>
 
@@ -32,7 +35,7 @@
 
     <TemplateColumn Context="customer">
         <a href="@($"customers/edit?id={customer.Id}")">Edit</a> |
-        <a href="@($"customers/details?id={customer.Id}")">Details</a> 
+        <a href="@($"customers/details?id={customer.Id}")">Details</a> | 
         @* <a href="@($"customers/delete?id={customer.Id}")">Delete</a> *@
         <AuthorizeView Roles="Administrator">
             | <a href="@($"customers/delete?id={customer.Id}")">Delete</a>

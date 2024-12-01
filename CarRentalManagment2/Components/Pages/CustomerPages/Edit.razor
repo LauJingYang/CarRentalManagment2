@@ -86,14 +86,6 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        using var context = DbFactory.CreateDbContext();
-        Customer ??= await context.Customer.FirstOrDefaultAsync(m => m.Id == Id);
-
-        if (Customer is null)
-        {
-            NavigationManager.NavigateTo("notfound");
-        }
-
         var authState = await authenticationStateProvider.GetAuthenticationStateAsync();
         var user = authState.User;
         // Get the userId claim
@@ -101,6 +93,14 @@ else
         if (userIdClaim != null)
         {
             userId = userIdClaim.Value;
+        }
+
+        using var context = DbFactory.CreateDbContext();
+        Customer ??= await context.Customer.FirstOrDefaultAsync(m => m.Id == Id);
+
+        if (Customer is null)
+        {
+            NavigationManager.NavigateTo("notfound");
         }
 
     }
